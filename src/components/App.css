@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.tick line {
+  stroke: #c0c0bb;
+}
+
+.tick text {
+  fill: #635f5d;
+}
+
+.mark {
+  fill: orange;
+}
+
+.marks path {
+  stroke: orange;
+  stroke-width: 10px;
+}
+
+.marks circle {
+  fill: #635f5d;
+}
+
+.axis-label {
+  font-size: 1.5em;
+}
