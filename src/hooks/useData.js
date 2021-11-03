@@ -40,7 +40,7 @@ export const useData = (defaultSearchTerm) => {
     setData(result.hourly);
   };
 
-  // console.log(data);
+  // console.log(data.slice(0, 25));
 
   return [data, search];
 };

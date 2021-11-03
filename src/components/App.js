@@ -1,5 +1,5 @@
 import React from 'react';
-import { scaleLinear, scaleTime, extent, utcFormat } from 'd3';
+import { scaleLinear, scaleTime, extent, timeFormat } from 'd3';
 import SearchBar from './SearchBar';
 import { useData } from '../hooks/useData';
 import Marks from './Marks';
@@ -7,8 +7,8 @@ import AxisLeft from './AxisLeft';
 import AxisBottom from './AxisBottom';
 import './App.css';
 
-const width = 960;
-const height = 500;
+const width = 1000;
+const height = 300;
 const margin = { top: 20, right: 30, bottom: 65, left: 90 };
 const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 45;
@@ -29,19 +29,19 @@ const App = () => {
   const yValue = (d) => d.temp;
   const yAxisLabel = 'Temperature';
 
-  const xAxisTickFormat = utcFormat('%H');
+  const xAxisTickFormat = timeFormat('%H:%M');
 
   const scaleX = scaleTime()
-    .domain(extent(data, xValue))
+    .domain(extent(data.slice(0, 24), xValue))
     .range([0, innerWidth])
     .nice();
 
   const scaleY = scaleLinear()
-    .domain(extent(data, yValue))
+    .domain(extent(data.slice(0, 24), yValue))
     .range([innerHeight, 0])
     .nice();
 
-  // console.log(data);
+  console.log(data);
 
   return (
     <div className="ui container">
@@ -74,13 +74,20 @@ const App = () => {
             {xAxisLabel}
           </text>
           <Marks
-            data={data}
+            data={data.slice(0, 24)}
             scaleX={scaleX}
             scaleY={scaleY}
             xValue={xValue}
             yValue={yValue}
             tooltipFormat={xAxisTickFormat}
             circleRadius={3}
+          />
+          <line
+            stroke="black"
+            x1={scaleX(0)}
+            x2={scaleX(0)}
+            y1={height}
+            y2="0"
           />
         </g>
       </svg>
