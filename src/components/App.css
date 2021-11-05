@@ -27,3 +27,20 @@ body {
 .axis-label {
   font-size: 1.5em;
 }
+
+.panels > div {
+  border: 1px solid black;
+}
+
+.panels {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 225px auto auto;
+  grid-template-rows: auto auto;
+}
+.panel-info {
+  grid-row: span 2;
+}
+.panel-positions {
+  grid-column: span 2;
+}
