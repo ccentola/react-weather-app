@@ -10,20 +10,16 @@ export const useData = (defaultSearchTerm) => {
 
   const search = async (city) => {
     const response = await json(
-      `http://api.openweathermap.org/data/2.5/weather?${new URLSearchParams({
-        appid: '9a307e5650309c268fc4bbecd601b941',
+      `${process.env.REACT_APP_API_URL}/weather?${new URLSearchParams({
+        appid: process.env.REACT_APP_API_KEY,
         q: city,
         units: 'imperial',
       })}`
     );
 
-    // console.log(response);
-
-    // setData({ ...data, current: { response } });
-
     const result = await json(
-      `http://api.openweathermap.org/data/2.5/onecall?${new URLSearchParams({
-        appid: '9a307e5650309c268fc4bbecd601b941',
+      `${process.env.REACT_APP_API_URL}/onecall?${new URLSearchParams({
+        appid: process.env.REACT_APP_API_KEY,
         lat: response.coord.lat,
         lon: response.coord.lon,
         units: 'imperial',
@@ -32,8 +28,6 @@ export const useData = (defaultSearchTerm) => {
 
     setData({ ...data, hourly: result.hourly, current: response });
   };
-
-  // console.log(data);
 
   return [data, search];
 };
