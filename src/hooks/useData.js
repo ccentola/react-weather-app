@@ -1,48 +1,61 @@
-import { useState, useEffect } from 'react';
-import { json } from 'd3';
+// import { useState, useEffect, useCallback } from 'react';
+// // import { json } from 'd3';
 
-export const useData = (defaultSearchTerm) => {
-  const [data, setData] = useState({ hourly: null, current: null });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+// export const useData = (defaultSearchTerm) => {
+//   const [data, setData] = useState([]);
+//   // const [isLoading, setIsLoading] = useState(false);
+//   // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    search(defaultSearchTerm);
-  }, [defaultSearchTerm]);
+//   const getWeather = useCallback(async (city) => {
+//     const response = await fetch(
+//       `${process.env.REACT_APP_API_URL}/weather?${new URLSearchParams({
+//         appid: process.env.REACT_APP_API_KEY,
+//         q: city,
+//         units: 'imperial',
+//       })}`
+//     );
+//     const json = await response.json();
+//     setData(json);
+//   }, []);
 
-  const search = async (city) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await json(
-        `${process.env.REACT_APP_API_URL}/weather?${new URLSearchParams({
-          appid: process.env.REACT_APP_API_KEY,
-          q: city,
-          units: 'imperial',
-        })}`
-      );
+//   useEffect(() => {
+//     getWeather(defaultSearchTerm);
+//   }, [defaultSearchTerm]);
+// };
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+// //   const search = async (city) => {
+// //     setIsLoading(true);
+// //     setError(null);
+// //     try {
+// //       const response = await json(
+// //         `${process.env.REACT_APP_API_URL}/weather?${new URLSearchParams({
+// //           appid: process.env.REACT_APP_API_KEY,
+// //           q: city,
+// //           units: 'imperial',
+// //         })}`
+// //       );
 
-      const result = await json(
-        `${process.env.REACT_APP_API_URL}/onecall?${new URLSearchParams({
-          appid: process.env.REACT_APP_API_KEY,
-          lat: response.coord.lat,
-          lon: response.coord.lon,
-          units: 'imperial',
-        })}`
-      );
-      if (!result.ok) {
-        throw new Error('something went wrong!');
-      }
-      setData({ ...data, hourly: result.hourly, current: response });
-      setIsLoading(false);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+// //       if (!response.ok) {
+// //         throw new Error('something went wrong!');
+// //       }
 
-  return [data, search];
-};
+// //       const result = await json(
+// //         `${process.env.REACT_APP_API_URL}/onecall?${new URLSearchParams({
+// //           appid: process.env.REACT_APP_API_KEY,
+// //           lat: response.coord.lat,
+// //           lon: response.coord.lon,
+// //           units: 'imperial',
+// //         })}`
+// //       );
+// //       if (!result.ok) {
+// //         throw new Error('something went wrong!');
+// //       }
+// //       setData({ ...data, hourly: result.hourly, current: response });
+// //     } catch (error) {
+// //       setError(error.message);
+// //     }
+// //     setIsLoading(false);
+// //   };
+
+// //   return [data, search];
+// // };

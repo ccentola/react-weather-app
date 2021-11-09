@@ -7,23 +7,27 @@ import AxisLeft from './AxisLeft';
 import AxisBottom from './AxisBottom';
 import './App.css';
 import CurrentWeather from './CurrentWeather';
+import { useFetch } from '../hooks/useFetch';
 
-const width = 850;
-const height = 300;
-const margin = { top: 20, right: 30, bottom: 65, left: 90 };
-const xAxisLabelOffset = 50;
-const yAxisLabelOffset = 45;
+// const width = 850;
+// const height = 300;
+// const margin = { top: 20, right: 30, bottom: 65, left: 90 };
+// const xAxisLabelOffset = 50;
+// const yAxisLabelOffset = 45;
 
 const App = () => {
-  const [data, search] = useData('boston');
-
-  if (!data) {
-    return <pre>Loading...</pre>;
-  }
+  // const [data, search] = useData('boston');
+  const { data, isLoading, error } = useFetch('boston');
 
   console.log(data);
 
-  return <div>App</div>;
+  return (
+    <div>
+      {isLoading && <div>Loading...</div>}
+      {error && <div>{error}...</div>}
+      App
+    </div>
+  );
 
   // const innerHeight = height - margin.top - margin.bottom;
   // const innerWidth = width - margin.left - margin.right;
