@@ -44,20 +44,14 @@ const App = () => {
   return (
     <div className="ui container">
       <SearchBar onFormSubmit={search} />
-      <div className="ui grid">
+      <div className="ui stackable grid">
         <div className="row">
           <div className="four wide column">
             <div className="ui dividing header">Current Conditions</div>
-          </div>
-          <div className="twelve wide column">
-            <div className="ui dividing header">Hourly Forecast</div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="four wide column">
             {currentWeather && <CurrentWeather weather={currentWeather} />}
           </div>
           <div className="twelve wide column">
+            <div className="ui dividing header">Hourly Forecast</div>
             <div className="ui fluid card">
               <div className="content">
                 <svg width={width} height={height}>
@@ -115,12 +109,8 @@ const App = () => {
         <div className="row">
           <div className="sixteen wide column">
             <div className="ui dividing header">Daily Forecast</div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="sixteen wide column">
-            <div className="ui eight stackable cards">
-              {data.daily.map((d) => (
+            <div className="ui seven stackable cards">
+              {data.daily.slice(1, 8).map((d) => (
                 <DailyCard data={d} key={d.dt} />
               ))}
             </div>
