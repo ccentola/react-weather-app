@@ -11,6 +11,8 @@
     "d3": "^7.1.1",
     "google-map-react": "^2.1.10",
     "mapbox-gl": "^2.5.1",
+    "mo": "^1.7.3",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",

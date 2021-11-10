@@ -1,61 +1,46 @@
-// import { useState, useEffect, useCallback } from 'react';
-// // import { json } from 'd3';
+import { useState, useEffect, useCallback } from 'react';
+import openWeather from '../api/openWeather';
 
-// export const useData = (defaultSearchTerm) => {
-//   const [data, setData] = useState([]);
-//   // const [isLoading, setIsLoading] = useState(false);
-//   // const [error, setError] = useState(null);
+export const useData = (searchCity) => {
+  // const [data, setData] = useState({ weather: [], onecall: [] });
+  const [data, setData] = useState({ hourly: [], daily: [] });
+  const [currentWeather, setCurrentWeather] = useState('');
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [isError, setIsError] = useState(false);
 
-//   const getWeather = useCallback(async (city) => {
-//     const response = await fetch(
-//       `${process.env.REACT_APP_API_URL}/weather?${new URLSearchParams({
-//         appid: process.env.REACT_APP_API_KEY,
-//         q: city,
-//         units: 'imperial',
-//       })}`
-//     );
-//     const json = await response.json();
-//     setData(json);
-//   }, []);
+  const search = useCallback(
+    async (city) => {
+      // setIsError(false);
+      // setIsLoading(true);
 
-//   useEffect(() => {
-//     getWeather(defaultSearchTerm);
-//   }, [defaultSearchTerm]);
-// };
+      // try {
+      const weather = await openWeather.get('/weather', {
+        params: { q: city },
+      });
 
-// //   const search = async (city) => {
-// //     setIsLoading(true);
-// //     setError(null);
-// //     try {
-// //       const response = await json(
-// //         `${process.env.REACT_APP_API_URL}/weather?${new URLSearchParams({
-// //           appid: process.env.REACT_APP_API_KEY,
-// //           q: city,
-// //           units: 'imperial',
-// //         })}`
-// //       );
+      setCurrentWeather(weather.data);
 
-// //       if (!response.ok) {
-// //         throw new Error('something went wrong!');
-// //       }
+      const onecall = await openWeather.get('/onecall', {
+        params: { lat: weather.data.coord.lat, lon: weather.data.coord.lon },
+      });
 
-// //       const result = await json(
-// //         `${process.env.REACT_APP_API_URL}/onecall?${new URLSearchParams({
-// //           appid: process.env.REACT_APP_API_KEY,
-// //           lat: response.coord.lat,
-// //           lon: response.coord.lon,
-// //           units: 'imperial',
-// //         })}`
-// //       );
-// //       if (!result.ok) {
-// //         throw new Error('something went wrong!');
-// //       }
-// //       setData({ ...data, hourly: result.hourly, current: response });
-// //     } catch (error) {
-// //       setError(error.message);
-// //     }
-// //     setIsLoading(false);
-// //   };
+      setData({ hourly: onecall.data.hourly, daily: onecall.data.daily });
+      // console.log(data);
+      // } catch (error) {
+      //   setIsError(true);
+      // }
 
-// //   return [data, search];
-// // };
+      // setIsLoading(false);
+    },
+    [searchCity]
+  );
+
+  useEffect(() => {
+    if (data) {
+      search(searchCity);
+    }
+  }, [search]);
+
+  // return [{ data, isLoading, isError }, search];
+  return [data, currentWeather, search];
+};

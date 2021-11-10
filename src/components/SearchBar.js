@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 const SearchBar = ({ onFormSubmit }) => {
-  const [term, updateTerm] = useState('');
+  const [term, setTerm] = useState('');
 
-  const onInputChange = (e) => {
-    updateTerm(e.target.value);
-  };
+  // const onInputChange = (e) => {
+  //   updateTerm(e.target.value);
+  // };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +19,11 @@ const SearchBar = ({ onFormSubmit }) => {
       <form onSubmit={onSubmit} className="ui form">
         <div className="field">
           <label>Weather Search</label>
-          <input type="text" value={term} onChange={onInputChange} />
+          <input
+            type="text"
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+          />
         </div>
       </form>
     </div>
