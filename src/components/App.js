@@ -56,6 +56,19 @@ const App = () => {
               <div className="content">
                 <svg width={width} height={height}>
                   <g transform={`translate(${margin.left},${margin.top})`}>
+                    {/* {data.daily ? (
+                      <rect
+                        x={scaleX(new Date(data.daily[0].sunset * 1000))}
+                        width={
+                          scaleX(new Date(data.daily[1].sunrise * 1000)) -
+                          scaleX(new Date(data.daily[0].sunset * 1000))
+                        }
+                        height={innerHeight}
+                        fill="purple"
+                      />
+                    ) : (
+                      <rect />
+                    )} */}
                     <AxisBottom
                       scaleX={scaleX}
                       innerHeight={innerHeight}
