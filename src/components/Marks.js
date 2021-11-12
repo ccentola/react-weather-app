@@ -24,6 +24,7 @@ const Marks = ({
         cx={scaleX(xValue(d))}
         cy={scaleY(yValue(d))}
         r={circleRadius}
+        key={scaleX(xValue(d))}
       >
         <title>{tooltipFormat(xValue(d))}</title>
       </circle>

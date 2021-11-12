@@ -18,7 +18,8 @@ const yAxisLabelOffset = 45;
 const App = () => {
   const [data, currentWeather, search] = useData('boston');
 
-  console.log(data.daily);
+  console.log(currentWeather);
+  console.log(data);
 
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
@@ -121,7 +122,7 @@ const App = () => {
         </div>
         <div className="row">
           <div className="sixteen wide column">
-            <div className="ui dividing header">Daily Forecast</div>
+            <div className="ui dividing header">Next 7 Days</div>
             <div className="ui seven stackable cards">
               {data.daily.slice(1, 8).map((d) => (
                 <DailyCard data={d} key={d.dt} />
