@@ -18,14 +18,15 @@ const DailyCard = ({ data }) => {
       <div className="center aligned content">
         <div className="Header">{moment(data.dt * 1000).format('dddd')}</div>
         <div className="description">
-          <p>{Math.round(data.temp.day)}&#8457;</p>
+          <p>{Math.round(data.temp.day)}&#176;</p>
           {/* {data.weather[0].description}{' '} */}
           <FontAwesomeIcon
             icon={getWeatherIcon(data.weather[0].main)}
             id="current-icon"
           />
           <p>
-            L: {Math.round(data.temp.min)} | H: {Math.round(data.temp.max)}
+            L: {Math.round(data.temp.min)}&#176;| H: {Math.round(data.temp.max)}
+            &#176;
           </p>
         </div>
       </div>

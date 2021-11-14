@@ -34,7 +34,8 @@ const CurrentWeather = ({ weather }) => {
             />
           </p>
           <p>
-            L: {weather.main.temp_min} | H: {weather.main.temp_max}
+            L: {Math.round(weather.main.temp_min)}&#176; | H:{' '}
+            {Math.round(weather.main.temp_max)}&#176;
           </p>
         </div>
       </div>
