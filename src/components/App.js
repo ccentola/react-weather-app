@@ -30,7 +30,7 @@ const App = () => {
   const yValue = (d) => d.temp;
   const yAxisLabel = 'Temperature';
 
-  const xAxisTickFormat = timeFormat('%H:%M');
+  const xAxisTickFormat = timeFormat('%H:%M %p');
 
   const scaleX = scaleTime()
     .domain(extent(data.hourly.slice(0, 24), xValue))

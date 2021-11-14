@@ -8,6 +8,9 @@ const SearchBar = ({ onFormSubmit }) => {
 
     // tells parent component what the current search term is
     onFormSubmit(term);
+
+    // clear input field
+    setTerm('');
   };
 
   return (
