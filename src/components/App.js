@@ -21,6 +21,17 @@ const App = () => {
   console.log(currentWeather);
   console.log(data);
 
+  const newDay = data.hourly.filter((eDate) => {
+    const rawDate = new Date(eDate.dt * 1000);
+    return (
+      rawDate.getHours() === 0 &&
+      rawDate.getMinutes() === 0 &&
+      rawDate.getSeconds() === 0
+    );
+  });
+
+  // console.log(newDay[0].dt);
+
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
@@ -55,7 +66,15 @@ const App = () => {
             <div className="ui dividing header">Hourly Forecast</div>
             <div className="ui fluid card">
               <div className="content">
-                <svg width={width} height={height}>
+                <svg
+                  width={width}
+                  height={height}
+                  viewBox={`0 0 ${Math.min(width, height)} ${Math.min(
+                    width,
+                    height
+                  )}`}
+                  preserveAspectRatio="xMinYMin"
+                >
                   <g transform={`translate(${margin.left},${margin.top})`}>
                     {/* {data.daily ? (
                       <rect
@@ -76,6 +95,14 @@ const App = () => {
                       tickFormat={xAxisTickFormat}
                       tickOffset={7}
                     />
+                    {/* <line
+                      x1={scaleX(new Date(newDay[0].dt * 1000))}
+                      x2={scaleX(new Date(newDay[0].dt * 1000))}
+                      y1={0}
+                      y2={innerHeight}
+                      stroke="black"
+                      strokeWidth="2px"
+                    /> */}
                     <text
                       className="axis-label"
                       textAnchor="middle"

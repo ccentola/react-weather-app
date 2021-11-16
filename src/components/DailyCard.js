@@ -19,7 +19,7 @@ const DailyCard = ({ data }) => {
         <div className="Header">{moment(data.dt * 1000).format('dddd')}</div>
         <div className="description">
           <p>{Math.round(data.temp.day)}&#176;</p>
-          {/* {data.weather[0].description}{' '} */}
+          {data.weather[0].description}{' '}
           <FontAwesomeIcon
             icon={getWeatherIcon(data.weather[0].main)}
             id="current-icon"
