@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faCloudRain, faCloud } from '@fortawesome/free-solid-svg-icons';
 import './CurrentWeather.css';
+import { Button, Icon } from 'semantic-ui-react';
+import Accordion from './Accordion';
 
 const CurrentWeather = ({ weather }) => {
+  const [expanded, setExpanded] = useState(false);
+
   const getWeatherIcon = (weatherDesc) => {
     if (weatherDesc === 'Rain') {
       return faCloudRain;
@@ -37,6 +41,22 @@ const CurrentWeather = ({ weather }) => {
             L: {Math.round(weather.main.temp_min)}&#176; | H:{' '}
             {Math.round(weather.main.temp_max)}&#176;
           </p>
+          {/* add accodion here */}
+          <div className="extra content">
+            <Button
+              basic
+              circular
+              icon
+              size="tiny"
+              onClick={() => setExpanded(!expanded)}
+            >
+              <Icon name="plus circle" />
+            </Button>
+            {expanded && (
+              <div style={{ height: 50 }}>Extra content expanded for card</div>
+            )}
+            Show More
+          </div>
         </div>
       </div>
     </div>
