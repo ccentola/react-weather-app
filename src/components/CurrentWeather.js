@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faCloudRain, faCloud } from '@fortawesome/free-solid-svg-icons';
 import './CurrentWeather.css';
 import { Button, Icon } from 'semantic-ui-react';
-import Accordion from './Accordion';
 
 const CurrentWeather = ({ weather }) => {
   const [expanded, setExpanded] = useState(false);
