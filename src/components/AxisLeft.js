@@ -12,7 +12,7 @@ const AxisLeft = ({ yScale, innerWidth, tickOffset = 3 }) =>
         x={-tickOffset}
         dy=".32em"
       >
-        {tickValue}
+        {Math.round(tickValue)}
       </text>
     </g>
   ));

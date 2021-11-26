@@ -18,17 +18,18 @@ const CurrentWeather = ({ weather }) => {
   };
 
   return (
-    <div className="ui fluid card">
-      <div className="center aligned content">
+    <div className="ui card">
+      <div className="content">
         <div className="header">{weather.name}</div>
         <div className="meta">
           {weather.coord.lat}, {weather.coord.lon}
         </div>
+      </div>
+      <div className="center aligned content">
+        <div className="ui statistic">
+          <div className="value">{Math.round(weather.main.temp)}&#8457;</div>
+        </div>
         <div className="description">
-          {/* <p id="current-temp">{Math.round(weather.main.temp)}&#8457;</p> */}
-          <div className="ui statistic">
-            <div className="value">{Math.round(weather.main.temp)}&#8457;</div>
-          </div>
           <p>
             {weather.weather[0].description}{' '}
             <FontAwesomeIcon
@@ -40,22 +41,29 @@ const CurrentWeather = ({ weather }) => {
             L: {Math.round(weather.main.temp_min)}&#176; | H:{' '}
             {Math.round(weather.main.temp_max)}&#176;
           </p>
-          {/* add accodion here */}
-          <div className="extra content">
-            <Button
-              basic
-              circular
-              icon
-              size="tiny"
-              onClick={() => setExpanded(!expanded)}
-            >
-              <Icon name="plus circle" />
-            </Button>
-            {expanded && (
-              <div style={{ height: 50 }}>Extra content expanded for card</div>
-            )}
-            Show More
-          </div>
+        </div>
+      </div>
+
+      <div className="content">
+        <div className="extra content">
+          <Button
+            className="ui compact orange button icon"
+            icon
+            size="tiny"
+            onClick={() => setExpanded(!expanded)}
+          >
+            <Icon name="angle down icon" />
+          </Button>
+          {expanded && (
+            <div style={{ height: 80 }}>
+              {' '}
+              <div className="item">Humidity: {weather.main.humidity}%</div>
+              <div className="item">Pressure: {weather.main.pressure}</div>
+              <div className="item">
+                Feels Like: {Math.round(weather.main.feels_like)}&#176;
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

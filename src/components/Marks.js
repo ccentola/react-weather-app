@@ -1,4 +1,5 @@
 import { line, curveNatural } from 'd3';
+import { faSun, faCloud, faCloudRain } from '@fortawesome/free-solid-svg-icons';
 
 const Marks = ({
   data,

@@ -8,6 +8,7 @@ import AxisBottom from './AxisBottom';
 import './App.css';
 import CurrentWeather from './CurrentWeather';
 import DailyCard from './DailyCard';
+import Navbar from './Navbar';
 
 const width = 800;
 const height = 250;
@@ -41,42 +42,44 @@ const App = () => {
   const yValue = (d) => d.temp;
   const yAxisLabel = 'Temperature';
 
-  const xAxisTickFormat = timeFormat('%H:%M %p');
+  const xAxisTickFormat = timeFormat('%H %p');
 
   const scaleX = scaleTime()
-    .domain(extent(data.hourly.slice(0, 24), xValue))
+    .domain(extent(data.hourly.slice(0, 12), xValue))
     .range([0, innerWidth])
     .nice();
 
   const scaleY = scaleLinear()
-    .domain(extent(data.hourly.slice(0, 24), yValue))
+    .domain(extent(data.hourly.slice(0, 12), yValue))
     .range([innerHeight, 0])
     .nice();
 
   return (
-    <div className="ui container">
-      <SearchBar onFormSubmit={search} />
-      <div className="ui stackable grid">
-        <div className="row">
-          <div className="four wide column">
-            <div className="ui dividing header">Current Conditions</div>
-            {currentWeather && <CurrentWeather weather={currentWeather} />}
-          </div>
-          <div className="twelve wide column">
-            <div className="ui dividing header">Hourly Forecast</div>
-            <div className="ui fluid card">
-              <div className="content">
-                <svg
-                  width={width}
-                  height={height}
-                  viewBox={`0 0 ${Math.min(width, height)} ${Math.min(
-                    width,
-                    height
-                  )}`}
-                  preserveAspectRatio="xMinYMin"
-                >
-                  <g transform={`translate(${margin.left},${margin.top})`}>
-                    {/* {data.daily ? (
+    <>
+      <Navbar />
+      <div className="ui container">
+        <SearchBar onFormSubmit={search} />
+        <div className="ui stackable grid">
+          <div className="row">
+            <div className="four wide column">
+              <div className="ui dividing header">Current Conditions</div>
+              {currentWeather && <CurrentWeather weather={currentWeather} />}
+            </div>
+            <div className="twelve wide column">
+              <div className="ui dividing header">Hourly Forecast</div>
+              <div className="ui fluid card">
+                <div className="content">
+                  <svg
+                    width={width}
+                    height={height}
+                    viewBox={`0 0 ${Math.min(width, height)} ${Math.min(
+                      width,
+                      height
+                    )}`}
+                    preserveAspectRatio="xMinYMin"
+                  >
+                    <g transform={`translate(${margin.left},${margin.top})`}>
+                      {/* {data.daily ? (
                       <rect
                         x={scaleX(new Date(data.daily[0].sunset * 1000))}
                         width={
@@ -89,13 +92,13 @@ const App = () => {
                     ) : (
                       <rect />
                     )} */}
-                    <AxisBottom
-                      scaleX={scaleX}
-                      innerHeight={innerHeight}
-                      tickFormat={xAxisTickFormat}
-                      tickOffset={7}
-                    />
-                    {/* <line
+                      <AxisBottom
+                        scaleX={scaleX}
+                        innerHeight={innerHeight}
+                        tickFormat={xAxisTickFormat}
+                        tickOffset={7}
+                      />
+                      {/* <line
                       x1={scaleX(new Date(newDay[0].dt * 1000))}
                       x2={scaleX(new Date(newDay[0].dt * 1000))}
                       y1={0}
@@ -103,62 +106,63 @@ const App = () => {
                       stroke="black"
                       strokeWidth="2px"
                     /> */}
-                    <text
-                      className="axis-label"
-                      textAnchor="middle"
-                      transform={`translate(${-yAxisLabelOffset},${
-                        innerHeight / 2
-                      }) rotate(-90)`}
-                    >
-                      {yAxisLabel}
-                    </text>
-                    <AxisLeft
-                      yScale={scaleY}
-                      innerWidth={innerWidth}
-                      tickOffset={7}
-                    />
-                    <text
-                      className="axis-label"
-                      x={innerWidth / 2}
-                      y={innerHeight + xAxisLabelOffset}
-                      textAnchor="middle"
-                    >
-                      {xAxisLabel}
-                    </text>
-                    <Marks
-                      data={data.hourly.slice(0, 24)}
-                      scaleX={scaleX}
-                      scaleY={scaleY}
-                      xValue={xValue}
-                      yValue={yValue}
-                      tooltipFormat={xAxisTickFormat}
-                      circleRadius={3}
-                    />
-                    <line
-                      stroke="black"
-                      x1={scaleX(0)}
-                      x2={scaleX(0)}
-                      y1={height}
-                      y2="0"
-                    />
-                  </g>
-                </svg>
+                      <text
+                        className="axis-label"
+                        textAnchor="middle"
+                        transform={`translate(${-yAxisLabelOffset},${
+                          innerHeight / 2
+                        }) rotate(-90)`}
+                      >
+                        {yAxisLabel}
+                      </text>
+                      <AxisLeft
+                        yScale={scaleY}
+                        innerWidth={innerWidth}
+                        tickOffset={7}
+                      />
+                      <text
+                        className="axis-label"
+                        x={innerWidth / 2}
+                        y={innerHeight + xAxisLabelOffset}
+                        textAnchor="middle"
+                      >
+                        {xAxisLabel}
+                      </text>
+                      <Marks
+                        data={data.hourly.slice(0, 12)}
+                        scaleX={scaleX}
+                        scaleY={scaleY}
+                        xValue={xValue}
+                        yValue={yValue}
+                        tooltipFormat={xAxisTickFormat}
+                        circleRadius={3}
+                      />
+                      <line
+                        stroke="black"
+                        x1={scaleX(0)}
+                        x2={scaleX(0)}
+                        y1={height}
+                        y2="0"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="sixteen wide column">
+              <div className="ui dividing header">Next 7 Days</div>
+              <div className="ui seven stackable cards">
+                {data.daily.slice(1, 8).map((d) => (
+                  <DailyCard data={d} key={d.dt} />
+                ))}
               </div>
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="sixteen wide column">
-            <div className="ui dividing header">Next 7 Days</div>
-            <div className="ui seven stackable cards">
-              {data.daily.slice(1, 8).map((d) => (
-                <DailyCard data={d} key={d.dt} />
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 
