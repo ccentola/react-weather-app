@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export default axios.create({
-  baseURL: "https://api.openweathermap.org/data/2.5",
+  baseURL: "http://api.openweathermap.org/data/2.5",
   params: {
     appid: key,
     units: "imperial",
