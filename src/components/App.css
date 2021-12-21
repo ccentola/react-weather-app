@@ -44,3 +44,37 @@ body {
 .panel-positions {
   grid-column: span 2;
 }
+
+path {
+  fill: none;
+  stroke: black;
+  stroke-width: 5px;
+}
+
+.marker-line {
+  stroke: black;
+  stroke-width: 2px;
+}
+
+text {
+  font-size: 2em;
+}
+
+.domain {
+  display: none;
+}
+
+.tick line {
+  stroke: #bbbbbb;
+}
+
+.tick text {
+  fill: #565656;
+  font-size: 14px;
+}
+
+path {
+  fill: none;
+  stroke: orange;
+  stroke-width: 7px;
+}

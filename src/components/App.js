@@ -1,49 +1,36 @@
-import React from 'react';
-import { scaleLinear, scaleTime, extent, timeFormat } from 'd3';
-import SearchBar from './SearchBar';
-import { useData } from '../hooks/useData';
-import Marks from './Marks';
-import AxisLeft from './AxisLeft';
-import AxisBottom from './AxisBottom';
-import './App.css';
-import CurrentWeather from './CurrentWeather';
-import DailyCard from './DailyCard';
-import Navbar from './Navbar';
+import React from "react";
+import { scaleLinear, scaleTime, extent, timeFormat } from "d3";
+import SearchBar from "./SearchBar";
+import { useData } from "../hooks/useData";
+import CurrentWeather from "./CurrentWeather";
+import DailyCard from "./DailyCard";
+import Navbar from "./Navbar";
+
+import "./App.css";
+import Chart from "./chart/Chart";
 
 const width = 800;
 const height = 250;
-const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-const xAxisLabelOffset = 50;
-const yAxisLabelOffset = 45;
 
 const App = () => {
-  const [data, currentWeather, search] = useData('boston');
+  const [data, currentWeather, search] = useData("boston");
 
   console.log(currentWeather);
-  console.log(data);
-
-  const innerHeight = height - margin.top - margin.bottom;
-  const innerWidth = width - margin.left - margin.right;
+  console.log(data.hourly);
 
   const xValue = (d) => new Date(d.dt * 1000);
-  const xAxisLabel = 'Time';
+  const xAxisLabel = "Time";
 
   const yValue = (d) => d.temp;
-  const yAxisLabel = 'Temperature';
+  const yAxisLabel = "Temperature";
 
-  const xAxisTickFormat = timeFormat('%H %p');
+  const xAxisTickFormat = timeFormat("%H %p");
 
-  const scaleX = scaleTime()
-    .domain(extent(data.hourly.slice(0, 12), xValue))
-    .range([0, innerWidth])
-    .nice();
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
-  const scaleY = scaleLinear()
-    .domain(extent(data.hourly.slice(0, 12), yValue))
-    .range([innerHeight, 0])
-    .nice();
-
-  return (
+  return data.hourly ? (
     <>
       <Navbar />
       <div className="ui container">
@@ -58,7 +45,8 @@ const App = () => {
               <div className="ui dividing header">Hourly Forecast</div>
               <div className="ui fluid card">
                 <div className="content">
-                  <svg
+                  <Chart data={data.hourly} width={width} height={height} />
+                  {/* <svg
                     width={width}
                     height={height}
                     viewBox={`0 0 ${Math.min(width, height)} ${Math.min(
@@ -114,7 +102,7 @@ const App = () => {
                         y2="0"
                       />
                     </g>
-                  </svg>
+                  </svg> */}
                 </div>
               </div>
             </div>
@@ -132,6 +120,8 @@ const App = () => {
         </div>
       </div>
     </>
+  ) : (
+    <div>Loading...</div>
   );
 };
 

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faCloudRain, faCloud } from '@fortawesome/free-solid-svg-icons';
-import './CurrentWeather.css';
-import { Button, Icon } from 'semantic-ui-react';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faCloudRain, faCloud } from "@fortawesome/free-solid-svg-icons";
+import "./CurrentWeather.css";
+import { Button, Icon } from "semantic-ui-react";
 
 const CurrentWeather = ({ weather }) => {
   const [expanded, setExpanded] = useState(false);
 
   const getWeatherIcon = (weatherDesc) => {
-    if (weatherDesc === 'Rain') {
+    if (weatherDesc === "Rain") {
       return faCloudRain;
     }
-    if (weatherDesc === 'Clouds') {
+    if (weatherDesc === "Clouds") {
       return faCloud;
     }
     return faSun;
@@ -31,14 +31,14 @@ const CurrentWeather = ({ weather }) => {
         </div>
         <div className="description">
           <p>
-            {weather.weather[0].description}{' '}
+            {weather.weather[0].description}{" "}
             <FontAwesomeIcon
               icon={getWeatherIcon(weather.weather[0].main)}
               id="current-icon"
             />
           </p>
           <p>
-            L: {Math.round(weather.main.temp_min)}&#176; | H:{' '}
+            L: {Math.round(weather.main.temp_min)}&#176; | H:{" "}
             {Math.round(weather.main.temp_max)}&#176;
           </p>
         </div>
@@ -56,7 +56,7 @@ const CurrentWeather = ({ weather }) => {
           </Button>
           {expanded && (
             <div style={{ height: 80 }}>
-              {' '}
+              {" "}
               <div className="item">Humidity: {weather.main.humidity}%</div>
               <div className="item">Pressure: {weather.main.pressure}</div>
               <div className="item">

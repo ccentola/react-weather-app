@@ -1,36 +1,31 @@
-import { useState, useEffect, useCallback } from 'react';
-import openWeather from '../api/openWeather';
+import { useState, useEffect, useCallback } from "react";
+import openWeather from "../api/openWeather";
+import { timeParse } from "d3";
+
+const parseDay = timeParse("%m/%d/%y");
+
+// const transform = rawData => {
+//   const days
+// }
 
 export const useData = (searchCity) => {
-  // const [data, setData] = useState({ weather: [], onecall: [] });
   const [data, setData] = useState({ hourly: [], daily: [] });
-  const [currentWeather, setCurrentWeather] = useState('');
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isError, setIsError] = useState(false);
+  const [currentWeather, setCurrentWeather] = useState("");
 
   const search = useCallback(
     async (city) => {
-      // setIsError(false);
-      // setIsLoading(true);
-
       // try {
-      const weather = await openWeather.get('/weather', {
+      const weather = await openWeather.get("/weather", {
         params: { q: city },
       });
 
       setCurrentWeather(weather.data);
 
-      const onecall = await openWeather.get('/onecall', {
+      const onecall = await openWeather.get("/onecall", {
         params: { lat: weather.data.coord.lat, lon: weather.data.coord.lon },
       });
 
       setData({ hourly: onecall.data.hourly, daily: onecall.data.daily });
-      // console.log(data);
-      // } catch (error) {
-      //   setIsError(true);
-      // }
-
-      // setIsLoading(false);
     },
     [searchCity]
   );
@@ -41,6 +36,5 @@ export const useData = (searchCity) => {
     }
   }, [search]);
 
-  // return [{ data, isLoading, isError }, search];
   return [data, currentWeather, search];
 };
